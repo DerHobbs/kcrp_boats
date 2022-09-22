@@ -6,7 +6,7 @@ The original script comes from kcrp all credits for him --> https://github.com/C
 
 ## What can it do now? <br>
 <br>
--sell boats <br>
+-Sell Boats <br>
 -Drop anchor and hoist <br>
 -All draw texts replaced by uipromts <br>
 -It now uses the Menuapi <br>
