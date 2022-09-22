@@ -117,27 +117,6 @@ local boates = {
 	}
 }
 
-local function DisplayHelp(_message, x, y, w, h, enableShadow, col1, col2, col3, a, centre )
-	local str = CreateVarString(10, "LITERAL_STRING", _message, Citizen.ResultAsLong())
-	SetTextScale(w, h)
-	SetTextColor(col1, col2, col3, a)
-	SetTextCentre(centre)
-	if enableShadow then
-		SetTextDropshadow(1, 0, 0, 0, 255)
-	end
-	Citizen.InvokeNative(0xADA9255D, 10);
-	DisplayText(str, x, y)
-end
-
-local function ShowNotification( _message )
-	local timer = 200
-	while timer > 0 do
-		DisplayHelp(_message, 0.50, 0.90, 0.6, 0.6, true, 161, 3, 0, 255, true, 10000)
-		timer = timer - 1
-		Citizen.Wait(0)
-	end
-end
-
 Citizen.CreateThread(function()
 	BoatPrompt()
 	while true do
@@ -162,7 +141,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
-function OpenBoatMenu()
+function OpenrsBoatMenu()
     MenuData.CloseAll()
     local elements = {
         { label = "Anker werfen/einholen", value = 'anker', desc = "Ankern" },
@@ -332,25 +311,6 @@ AddEventHandler("rs_boats:CreateNPC", function(zone)
     end
 end)
 
--- | Notification | --
-RegisterNetEvent('UI:DrawNotification')
-AddEventHandler('UI:DrawNotification', function(_message)
-	ShowNotification(_message)
-end)
-
--- | Get Current Town Name, Some Towns missing | --
-function GetCurrentTownName()
-    local pedCoords = GetEntityCoords(PlayerPedId())
-    local town_hash = Citizen.InvokeNative(0x43AD8FC02B429D33, pedCoords ,1)
-    if town_hash == GetHashKey("Annesburg") then
-        return "Annesburg"
-    elseif town_hash == GetHashKey("Blackwater") then
-        return "Blackwater"
-    elseif town_hash == GetHashKey("StDenis") then
-        return "Saint Denis"
-    end
-end
-
 -- | Boat Storage | --
 Citizen.CreateThread(function()
 	while true do
@@ -368,7 +328,7 @@ end)
 
 function OpenBoatMenu()
 	if boating == true then
-		OpenBoatMenu()
+		OpenrsBoatMenu()
 	else
 		return
 	end

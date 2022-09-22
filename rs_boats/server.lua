@@ -28,7 +28,7 @@ AddEventHandler( 'rs:buyboat', function (args)
     u_money = User.money
 
     if u_money < _price then
-        TriggerClientEvent("vorp:TipBottom", source, "Du hast nicht genug Geld dabei", 4000)
+        TriggerClientEvent("vorp:TipBottom", source, "Du hast nicht genug Geld dabei", 5000)
         return
     end
 
@@ -36,7 +36,7 @@ AddEventHandler( 'rs:buyboat', function (args)
 
     local Parameters = { ['identifier'] = u_identifier, ['charid'] = u_charid, ['boat'] = _model, ['name'] = _name }
     exports.ghmattimysql:execute("INSERT INTO boates ( `identifier`, `charid`, `boat`, `name` ) VALUES ( @identifier, @charid, @boat, @name )", Parameters)
-    TriggerClientEvent("vorp:TipBottom", source, "Du hast ein Boot gekauft, Herzlichen Glückwunsch", 4000)
+    TriggerClientEvent("vorp:TipBottom", source, "Du hast ein Boot gekauft, Herzlichen Glückwunsch", 5000)
     TriggerClientEvent("rs:spawnBoat", source, _model)
 end)
 
