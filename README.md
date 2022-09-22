@@ -11,7 +11,8 @@ The original script comes from kcrp all credits for him --> https://github.com/C
 -All draw texts replaced by uipromts <br>
 -It now uses the Menuapi <br>
 -Made some adjustments in the script <br>
-<br>
+-When the boat is parked, you have enough time to get out before it despawns <br>
+-Additional boots stores can now easily be added via the config (No more zone dependency) <br>
 -Have fun with it<br>
 
 ## How to Install? <br> 
