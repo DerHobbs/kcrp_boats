@@ -17,7 +17,7 @@ The original script comes from kcrp all credits for him --> https://github.com/C
 
 ## How to Install? <br> 
 1. Copy the Folder into your resources/ folder <br> 
-2. Add `rs_boats` to your server.cfg <br> 
+2. Add `kcrp_boats` to your server.cfg <br> 
 
 ## Dependencies
 
