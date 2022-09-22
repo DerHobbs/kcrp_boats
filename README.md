@@ -1,4 +1,4 @@
-# rs_boats
+# kcrp_boats
 Simple boats with the most important functions
 
 ## Credits <br> 
