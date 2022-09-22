@@ -4,13 +4,10 @@ local pressTime = 0
 local pressLeft = 0
 local OwnedBoats = {}
 local near = 1000
-
 local recentlySpawned = 0
-
 local boatModel;
 local boatSpawn = {}
 local NumberboatSpawn = 0
-
 local boating = false
 local isAnchored = false
 local stand = { x = 0, y = 0, z = 0 }
@@ -37,7 +34,6 @@ TriggerEvent("menuapi:getData",function(call)
 end)
 
 --Config Boats Here
-
 local boates = {
 	[1] = {
 		['Text'] = "Ruderboot",
@@ -49,7 +45,6 @@ local boates = {
 			['Model'] = "rowboat",
 		}
 	},
-
 	[2] = {
 		['Text'] = "Sumpf Ruderboot",
 		['SubText'] = "",
@@ -60,7 +55,6 @@ local boates = {
 			['Model'] = "rowboatSwamp",
 		}
 	},
-
 	[3] = {
 		['Text'] = "Kanu",
 		['SubText'] = "",
@@ -71,7 +65,6 @@ local boates = {
 			['Model'] = "CANOE",
 		}
 	},
-
 	[4] = {
 		['Text'] = "Piroggen Boot",
 		['SubText'] = "",
@@ -82,7 +75,6 @@ local boates = {
 			['Model'] = "pirogue",
 		}
 	},
-
 	[5] = {
 		['Text'] = "Piroggen Boot 2",
 		['SubText'] = "",
@@ -93,7 +85,6 @@ local boates = {
 			['Model'] = "pirogue2",
 		}
 	},
-
 	[6] = {
 		['Text'] = "Baumstamm Kanu",
 		['SubText'] = "",
@@ -104,7 +95,6 @@ local boates = {
 			['Model'] = "CANOETREETRUNK",
 		}
 	},
-
 	[7] = {
 		['Text'] = "Dampfboot",
 		['SubText'] = "",
@@ -115,7 +105,6 @@ local boates = {
 			['Model'] = "KEELBOAT",
 		}
 	},
-
 	[8] = {
 		['Text'] = "Modernes Dampfschiff",
 		['SubText'] = "",
@@ -126,26 +115,18 @@ local boates = {
 			['Model'] = "boatsteam02x",
 		}
 	}
-
 }
 
 local function DisplayHelp(_message, x, y, w, h, enableShadow, col1, col2, col3, a, centre )
-
 	local str = CreateVarString(10, "LITERAL_STRING", _message, Citizen.ResultAsLong())
-
 	SetTextScale(w, h)
 	SetTextColor(col1, col2, col3, a)
-
 	SetTextCentre(centre)
-
 	if enableShadow then
 		SetTextDropshadow(1, 0, 0, 0, 255)
 	end
-
 	Citizen.InvokeNative(0xADA9255D, 10);
-
 	DisplayText(str, x, y)
-
 end
 
 local function ShowNotification( _message )
@@ -174,7 +155,6 @@ Citizen.CreateThread(function()
 				OpenMenu()
 			end
 		end
-		--print("deine mudda "..Config.BoatSpawn[index].x)
 		if GetDistanceBetweenCoords(stand.x, stand.y, stand.z, GetEntityCoords(PlayerPedId()), false) > 2 then
 			MenuData.Close('default', GetCurrentResourceName(), 'menuapi')
 			near = 1000
@@ -182,9 +162,8 @@ Citizen.CreateThread(function()
 	end
 end)
 
-function OpenKruegerBoatMenu()
+function OpenBoatMenu()
     MenuData.CloseAll()
-
     local elements = {
         { label = "Anker werfen/einholen", value = 'anker', desc = "Ankern" },
         { label = "Einparken", value = 'parken', desc = "Der Bootswärter wird dein Boot gleich einparken" }
@@ -312,8 +291,6 @@ function OpenBuyBoatsMenu()
 	end)
 end
 
-
-
 RegisterNetEvent("rs:loadBoatsMenu")
 AddEventHandler("rs:loadBoatsMenu", function(result)
 	OwnedBoats = result
@@ -321,7 +298,6 @@ AddEventHandler("rs:loadBoatsMenu", function(result)
 end)
 
 -- | Blips and NPC | --
-
 Citizen.CreateThread(function()
     for _,marker in pairs(Config.Marker) do
         local blip = N_0x554d9d53f696d002(1664425300, marker.x, marker.y, marker.z)
@@ -339,16 +315,12 @@ end)
 
 RegisterNetEvent("rs_boats:CreateNPC")
 AddEventHandler("rs_boats:CreateNPC", function(zone)
-
     if not DoesEntityExist(boatnpc) then
-    
         local model = GetHashKey("A_M_M_UniBoatCrew_01")
         RequestModel(model)
-
         while not HasModelLoaded(model) do
             Wait(500)
-        end
-                
+        end     
         boatnpc = CreatePed(model, zone.x, zone.y, zone.z - 0.98, zone.h,  false, true)
         Citizen.InvokeNative(0x283978A15512B2FE , boatnpc, true )
         SetEntityNoCollisionEntity(PlayerPedId(), boatnpc, false)
@@ -361,7 +333,6 @@ AddEventHandler("rs_boats:CreateNPC", function(zone)
 end)
 
 -- | Notification | --
-
 RegisterNetEvent('UI:DrawNotification')
 AddEventHandler('UI:DrawNotification', function(_message)
 	ShowNotification(_message)
@@ -397,8 +368,7 @@ end)
 
 function OpenBoatMenu()
 	if boating == true then
-		--WarMenu.OpenMenu('MobileBoatMenu')
-		OpenKruegerBoatMenu()
+		OpenBoatMenu()
 	else
 		return
 	end
@@ -407,18 +377,14 @@ end
 -- | Spawn boat | --
 RegisterNetEvent('rs:spawnBoat' )
 AddEventHandler('rs:spawnBoat', function(_model)
-
 	DeleteVehicle(spawn_boat)
 	RequestModel(_model)
-
 	while not HasModelLoaded(_model) do
 		Wait(500)
 	end
-
 	spawn_boat = CreateVehicle(_model, stand.xo, stand.yo, stand.zo, stand.ho, true, false)
 	SetVehicleOnGroundProperly(spawn_boat)
 	SetModelAsNoLongerNeeded(_model)
-
 	local player = PlayerPedId()
 	DoScreenFadeOut(500)
 	Wait(500)
